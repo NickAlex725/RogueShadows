@@ -7,29 +7,32 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [Header("Player Info")]
-    [SerializeField] private int _moveSpeed;
-    [SerializeField] private int _sprintSpeed;
-    [SerializeField] private int _jumpPower;
-    [SerializeField] private int _dashStrength;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _sprintSpeed;
+    [SerializeField] private float _jumpPower;
+    [SerializeField] private float _dashStrength;
+    [SerializeField] private float _dashDuration;
     [SerializeField] private float _gravityMultiplier = 3.0f;
 
     [Header("References")]
     [SerializeField] private GameObject _art;
+    [SerializeField] private Transform _VFXTransform;
+    [SerializeField] private ParticleSystem _dashVFX;
+    [SerializeField] private TrailRenderer _trail;
 
     private CharacterController _characterController;
     private Vector2 _move;
-    private int _currentMoveSpeed;
+    private float _currentMoveSpeed;
     private Vector3 _direction;
     private float _currnetVelocity;
     private float _velocity;
     private float _gravity = -9.81f;
-    private bool _canDash = true; //set to true for testing purposes
-    private bool _isDashing;
 
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _trail = GetComponent<TrailRenderer>();
         _currentMoveSpeed = _moveSpeed;
     }
 
@@ -40,13 +43,25 @@ public class Player : MonoBehaviour
         ApplyMovement();
     }
 
-    public void OnShadowDash(InputAction.CallbackContext context)
+    public void ShadowDash(InputAction.CallbackContext context)
     {
-        Debug.Log("Dashing");
-        if(_canDash)
+        if (!context.started) return;
+        StartCoroutine(Dash());
+    }
+
+    private IEnumerator Dash()
+    {
+        _art.gameObject.SetActive(false);
+        _trail.emitting = true;
+        Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
+        for (float i = 0; i < _dashDuration; i++)
         {
-            _isDashing = true;
+            _characterController.Move(_direction * _dashStrength);
+            yield return new WaitForSeconds(0.01f);
         }
+        Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
+        _trail.emitting = false;
+        _art.gameObject.SetActive(true);
     }
 
     public void Move(InputAction.CallbackContext context)
