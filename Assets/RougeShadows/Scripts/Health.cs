@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] int _maxHealth;
     private int _minHealth = 0;
 
-    public int _currentHealth;
+    public int _currentHealth { get; private set; }
 
     private void Start()
     {

@@ -7,24 +7,23 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
 {
-    [Header("Player Info")]
+    [Header("Player Stats")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _sprintSpeed;
     [SerializeField] private float _jumpPower;
     [SerializeField] private float _dashStrength;
+    [SerializeField] private int _dashDamage;
     [SerializeField] private float _dashDuration;
     [SerializeField] private float _gravityMultiplier = 3.0f;
 
     [Header("References")]
-    [SerializeField] private PlayerInput _input;
-    [SerializeField] private GameObject _art;
     [SerializeField] private Animator _anim;
-    [SerializeField] private Collider _col;
     [SerializeField] private Transform _VFXTransform;
     [SerializeField] private ParticleSystem _dashVFX;
+    private PlayerInput _input;
     private TrailRenderer _trail;
 
-    // vars for character controller
+    //character controller
     private CharacterController _characterController;
     private Vector2 _move;
     private float _currentMoveSpeed;
@@ -32,10 +31,24 @@ public class Player : MonoBehaviour
     private float _currnetVelocity;
     private float _velocity;
     private float _gravity = -9.81f;
+    private Vector2 _mouseDirection;
 
-    //vars for player status
-    private bool _isAlive = true;
+    //player info
     private Health _health;
+    private bool _canDoDamage = false;
+    private bool _canBeDamaged = true;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(_canDoDamage)
+        {
+            var target = other.GetComponent<MeleeEnemy>();
+            if (target != null)
+            {
+                target.TakeDamage(_dashDamage);
+            }
+        }
+    }
 
     private void Awake()
     {
@@ -43,7 +56,6 @@ public class Player : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _trail = GetComponent<TrailRenderer>();
         _health = GetComponent<Health>();
-        _col = GetComponent<Collider>();
         _currentMoveSpeed = _moveSpeed;
     }
 
@@ -57,24 +69,32 @@ public class Player : MonoBehaviour
     public void ShadowDash(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        StartCoroutine(Dash());
+        _mouseDirection.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+        _mouseDirection.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
+        _mouseDirection.x -= transform.position.x;
+        _mouseDirection.y -= transform.position.z;
+        _mouseDirection.Normalize();
+        Debug.Log(_mouseDirection);
+        //StartCoroutine(Dash(_mouseDirection));
     }
 
-    private IEnumerator Dash()
+    private IEnumerator Dash(Vector3 dashDir)
     {
-        _col.enabled = false;
+        _canBeDamaged = false;
+        _canDoDamage = true;
         _anim.SetBool("Dashing", true);
         _trail.emitting = true;
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         for (float i = 0; i < _dashDuration; i++)
         {
-            _characterController.Move(_direction * _dashStrength);
+            _characterController.Move(dashDir * _dashStrength);
             yield return new WaitForSeconds(0.01f);
         }
-        Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
-        _trail.emitting = false;
+        _canBeDamaged = true;
+        _canDoDamage = false;
         _anim.SetBool("Dashing", false);
-        _col.enabled = true;
+        _trail.emitting = false;
+        Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -85,12 +105,10 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        /* disabling jumping since we don't plan on using it for now
         if (!context.started) return;
         if (!_characterController.isGrounded) return;
 
         _velocity += _jumpPower;
-        */
     }
 
     public void Sprint(InputAction.CallbackContext context)
@@ -134,12 +152,15 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if(_health.TakeDamage(damage) <= 0)
+        if(_canBeDamaged)
         {
-            //player death
-            _anim.SetBool("isAlive", false);
-            _isAlive = false;
-            _input.DeactivateInput();
+            if (_health.TakeDamage(damage) <= 0)
+            {
+                //player death
+                _anim.SetBool("isAlive", false);
+                _input.DeactivateInput();
+            }
+            Debug.Log(damage + " Damage Taken!");
         }
     }
 }
