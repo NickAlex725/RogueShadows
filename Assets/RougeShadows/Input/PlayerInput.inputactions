@@ -200,7 +200,7 @@
                 {
                     "name": "",
                     "id": "f0f850b4-0ec4-4939-bf48-0fbf31b07889",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
