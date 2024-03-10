@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 555307445}
   - component: {fileID: 555307444}
   - component: {fileID: 555307443}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 1101886263}
   - component: {fileID: 1101886262}
   - component: {fileID: 1101886261}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: 1195569877}
   - component: {fileID: 1195569876}
   - component: {fileID: 1195569875}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,7 +745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1544455961}
   - component: {fileID: 1544455962}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,6 +858,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
+        type: 3}
+      propertyPath: _dashDuration
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
+        type: 3}
+      propertyPath: _dashStrength
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
+        type: 3}
+      propertyPath: groundMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 8906762502301314171, guid: 0de7c07552e3ce149a13a6e3417bbab7,
         type: 3}

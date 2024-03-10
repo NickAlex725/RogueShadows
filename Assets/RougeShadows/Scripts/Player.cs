@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         for (float i = 0; i < _dashDuration; i++)
         {
-            _characterController.Move(_mouseDirection * _dashStrength);
+            _characterController.Move(_mouseDirection.normalized * _dashStrength);
             yield return new WaitForSeconds(0.01f);
         }
         _input.ActivateInput();
