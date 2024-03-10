@@ -8,12 +8,12 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _sprintSpeed;
-    [SerializeField] private float _jumpPower;
-    [SerializeField] private float _dashStrength;
+    [SerializeField] private float _moveSpeed = 1;
+ //   [SerializeField] private float _sprintSpeed;
+ //   [SerializeField] private float _jumpPower;
+    [SerializeField] private float _dashStrength = 0.05f;
     [SerializeField] private int _dashDamage;
-    [SerializeField] private float _dashDuration;
+    [SerializeField] private float _dashDuration = 0.05f;
     [SerializeField] private float _gravityMultiplier = 3.0f;
 
     [Header("References")]
@@ -38,6 +38,10 @@ public class Player : MonoBehaviour
     private bool _canDoDamage = false;
     private bool _canBeDamaged = true;
 
+    //raycast
+    [SerializeField] private LayerMask groundMask;
+    private Camera mainCamera;
+
     private void OnTriggerEnter(Collider other)
     {
         if(_canDoDamage)
@@ -57,28 +61,29 @@ public class Player : MonoBehaviour
         _trail = GetComponent<TrailRenderer>();
         _health = GetComponent<Health>();
         _currentMoveSpeed = _moveSpeed;
+        mainCamera = Camera.main;
     }
 
     private void Update()
     {
-        ApplyGravity();
-        ApplyRotation();
         ApplyMovement();
+        Aim();
+        ApplyGravity();
+
+        //RMB Dash
+        if (Input.GetMouseButtonDown(1))
+        {
+            StartCoroutine(Dash());
+        }
     }
 
+    /*
     public void ShadowDash(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        /*
-        _mouseDirection.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        _mouseDirection.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
-        _mouseDirection.x -= transform.position.x;
-        _mouseDirection.y -= transform.position.z;
-        _mouseDirection.Normalize();
-        Debug.Log(_mouseDirection);
-        */
         StartCoroutine(Dash());
     }
+    */
 
     private IEnumerator Dash()
     {
@@ -99,44 +104,43 @@ public class Player : MonoBehaviour
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
     }
 
-    public void Move(InputAction.CallbackContext context)
+    //Raycasting
+    private (bool success, Vector3 position) GetMousePosition()
     {
-        _move = context.ReadValue<Vector2>();
-        _direction = new Vector3(_move.x, 0.0f, _move.y);
-    }
-
-    public void Jump(InputAction.CallbackContext context)
-    {
-        if (!context.started) return;
-        if (!_characterController.isGrounded) return;
-
-        _velocity += _jumpPower;
-    }
-
-    public void Sprint(InputAction.CallbackContext context)
-    {
-        if (context.started)
+        var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, groundMask))
         {
-            _currentMoveSpeed = _sprintSpeed;
+            return (success: true, position: hitInfo.point);
         }
-        else if(context.canceled)
+        else
         {
-            _currentMoveSpeed = _moveSpeed;
+            return (success: false, position: Vector3.zero);
+        }
+
+    }
+
+    private void Aim()
+    {
+        var (success, position) = GetMousePosition();
+        if (success)
+        {
+            _direction = position - transform.position;
+
+            //no janky rotations when hovering over player
+            _direction.y = 0;
+
+            transform.forward = _direction;
         }
     }
+    //end of Raycasting code
 
-    private void ApplyRotation()
-    {
-        if (_move.sqrMagnitude == 0) return;
-
-        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
-        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currnetVelocity, 0.05f);
-        transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-    }
-
+    //LMB Move towards mouse/raycast distance
     private void ApplyMovement()
     {
-        _characterController.Move(_direction * _currentMoveSpeed * Time.deltaTime);
+        if (Input.GetMouseButton(0))
+        {
+           _characterController.Move(_direction * Time.deltaTime * _moveSpeed);
+        }
     }
 
     private void ApplyGravity()
