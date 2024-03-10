@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour
 {
     [Header("Player Info")]
@@ -15,11 +16,15 @@ public class Player : MonoBehaviour
     [SerializeField] private float _gravityMultiplier = 3.0f;
 
     [Header("References")]
+    [SerializeField] private PlayerInput _input;
     [SerializeField] private GameObject _art;
+    [SerializeField] private Animator _anim;
+    [SerializeField] private Collider _col;
     [SerializeField] private Transform _VFXTransform;
     [SerializeField] private ParticleSystem _dashVFX;
-    [SerializeField] private TrailRenderer _trail;
+    private TrailRenderer _trail;
 
+    // vars for character controller
     private CharacterController _characterController;
     private Vector2 _move;
     private float _currentMoveSpeed;
@@ -28,11 +33,17 @@ public class Player : MonoBehaviour
     private float _velocity;
     private float _gravity = -9.81f;
 
+    //vars for player status
+    private bool _isAlive = true;
+    private Health _health;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _input = GetComponent<PlayerInput>();
         _trail = GetComponent<TrailRenderer>();
+        _health = GetComponent<Health>();
+        _col = GetComponent<Collider>();
         _currentMoveSpeed = _moveSpeed;
     }
 
@@ -51,7 +62,8 @@ public class Player : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        _art.gameObject.SetActive(false);
+        _col.enabled = false;
+        _anim.SetBool("Dashing", true);
         _trail.emitting = true;
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         for (float i = 0; i < _dashDuration; i++)
@@ -61,7 +73,8 @@ public class Player : MonoBehaviour
         }
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         _trail.emitting = false;
-        _art.gameObject.SetActive(true);
+        _anim.SetBool("Dashing", false);
+        _col.enabled = true;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -72,10 +85,12 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
+        /* disabling jumping since we don't plan on using it for now
         if (!context.started) return;
         if (!_characterController.isGrounded) return;
 
         _velocity += _jumpPower;
+        */
     }
 
     public void Sprint(InputAction.CallbackContext context)
@@ -115,5 +130,16 @@ public class Player : MonoBehaviour
             _velocity += _gravity * _gravityMultiplier * Time.deltaTime;
         }
         _direction.y = _velocity;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if(_health.TakeDamage(damage) <= 0)
+        {
+            //player death
+            _anim.SetBool("isAlive", false);
+            _isAlive = false;
+            _input.DeactivateInput();
+        }
     }
 }
