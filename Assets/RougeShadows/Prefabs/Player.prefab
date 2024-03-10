@@ -118,7 +118,7 @@ MonoBehaviour:
   _sprintSpeed: 10
   _jumpPower: 4
   _dashStrength: 0.4
-  _dashDamage: 25
+  _dashDamage: 100
   _dashDuration: 50
   _gravityMultiplier: 1
   _anim: {fileID: 1307769987130042898}

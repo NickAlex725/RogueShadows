@@ -69,16 +69,18 @@ public class Player : MonoBehaviour
     public void ShadowDash(InputAction.CallbackContext context)
     {
         if (!context.started) return;
+        /*
         _mouseDirection.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
         _mouseDirection.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
         _mouseDirection.x -= transform.position.x;
         _mouseDirection.y -= transform.position.z;
         _mouseDirection.Normalize();
         Debug.Log(_mouseDirection);
-        //StartCoroutine(Dash(_mouseDirection));
+        */
+        StartCoroutine(Dash());
     }
 
-    private IEnumerator Dash(Vector3 dashDir)
+    private IEnumerator Dash()
     {
         _canBeDamaged = false;
         _canDoDamage = true;
@@ -87,7 +89,7 @@ public class Player : MonoBehaviour
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         for (float i = 0; i < _dashDuration; i++)
         {
-            _characterController.Move(dashDir * _dashStrength);
+            _characterController.Move(_direction * _dashStrength);
             yield return new WaitForSeconds(0.01f);
         }
         _canBeDamaged = true;
