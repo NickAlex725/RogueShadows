@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &670869009910253153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4988440110661372345}
+  m_Layer: 0
+  m_Name: ShadowDrop
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4988440110661372345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670869009910253153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7168138951431268026}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2243185113237317501
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +416,7 @@ Transform:
   - {fileID: 3291542078011894377}
   - {fileID: 7018998060661118218}
   - {fileID: 239200881229255275}
+  - {fileID: 4988440110661372345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 198.491, z: 0}
 --- !u!195 &6797290280348014629
@@ -459,5 +491,8 @@ MonoBehaviour:
   _attackCD: 0.7
   _deathVFX: {fileID: 3559891168393963799, guid: f9414a28662b64c488e0e10210f1d290,
     type: 3}
+  _shadowTriggerBox: {fileID: 9143944260491305526, guid: 1cd90ec27308eeb4d84dc2edc72a8223,
+    type: 3}
+  _shadowDropPosition: {fileID: 4988440110661372345}
   _barrel: {fileID: 239200881229255275}
   _gunVFX: {fileID: 3559891168393963799, guid: 9436a63754ae0c04db72dea4e072aed6, type: 3}

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,13 +9,15 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
-    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _moveSpeed = 1;
     [SerializeField] private float _sprintSpeed;
     [SerializeField] private float _jumpPower;
-    [SerializeField] private float _dashStrength;
+    [SerializeField] private float _dashStrength = 0.05f;
     [SerializeField] private int _dashDamage;
-    [SerializeField] private float _dashDuration;
+    [SerializeField] private float _dashDuration = 0.05f;
     [SerializeField] private float _gravityMultiplier = 3.0f;
+    [SerializeField] private bool _enableSprint;
+    [SerializeField] private bool _enableJump;
 
     [Header("References")]
     [SerializeField] private Animator _anim;
@@ -31,21 +34,31 @@ public class Player : MonoBehaviour
     private float _currnetVelocity;
     private float _velocity;
     private float _gravity = -9.81f;
-    private Vector2 _mouseDirection;
+    private Vector3 _mouseDirection;
 
     //player info
     private Health _health;
+    public bool canDash = false;
     private bool _canDoDamage = false;
     private bool _canBeDamaged = true;
+
+    //raycast
+    [SerializeField] private LayerMask groundMask;
+    private Camera mainCamera;
 
     private void OnTriggerEnter(Collider other)
     {
         if(_canDoDamage)
         {
-            var target = other.GetComponent<MeleeEnemy>();
-            if (target != null)
+            var Mtarget = other.GetComponent<MeleeEnemy>();
+            var Rtarget = other.GetComponent<RangedEnemy>();
+            if (Mtarget != null)
             {
-                target.TakeDamage(_dashDamage);
+                Mtarget.TakeDamage(_dashDamage);
+            }
+            if (Rtarget != null)
+            {
+                Rtarget.TakeDamage(_dashDamage);
             }
         }
     }
@@ -57,31 +70,29 @@ public class Player : MonoBehaviour
         _trail = GetComponent<TrailRenderer>();
         _health = GetComponent<Health>();
         _currentMoveSpeed = _moveSpeed;
+        mainCamera = Camera.main;
     }
 
     private void Update()
     {
-        ApplyGravity();
-        ApplyRotation();
         ApplyMovement();
+        ApplyRotation();
+        ApplyGravity();
+        Aim();
     }
 
     public void ShadowDash(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        /*
-        _mouseDirection.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
-        _mouseDirection.y = Camera.main.ScreenToWorldPoint(Input.mousePosition).z;
-        _mouseDirection.x -= transform.position.x;
-        _mouseDirection.y -= transform.position.z;
-        _mouseDirection.Normalize();
-        Debug.Log(_mouseDirection);
-        */
-        StartCoroutine(Dash());
+        if(canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
-
+    
     private IEnumerator Dash()
     {
+        _input.DeactivateInput();
         _canBeDamaged = false;
         _canDoDamage = true;
         _anim.SetBool("Dashing", true);
@@ -89,15 +100,47 @@ public class Player : MonoBehaviour
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         for (float i = 0; i < _dashDuration; i++)
         {
-            _characterController.Move(_direction * _dashStrength);
+            transform.forward = _mouseDirection;
+            _characterController.Move(_mouseDirection.normalized * _dashStrength);
             yield return new WaitForSeconds(0.01f);
         }
+        _input.ActivateInput();
         _canBeDamaged = true;
         _canDoDamage = false;
         _anim.SetBool("Dashing", false);
         _trail.emitting = false;
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
     }
+
+    //Raycasting
+    private (bool success, Vector3 position) GetMousePosition()
+    {
+        var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, groundMask))
+        {
+            return (success: true, position: hitInfo.point);
+        }
+        else
+        {
+            return (success: false, position: Vector3.zero);
+        }
+
+    }
+
+    private void Aim()
+    {
+        var (success, position) = GetMousePosition();
+        if (success)
+        {
+            _mouseDirection = position - transform.position;
+
+            //no janky rotations when hovering over player
+            _mouseDirection.y = 0;
+
+            //transform.forward = _mouseDirection;
+        }
+    }
+    //end of Raycasting code
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -107,22 +150,33 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (!context.started) return;
-        if (!_characterController.isGrounded) return;
+        if(_enableJump)
+        {
+            if (!context.started) return;
+            if (!_characterController.isGrounded) return;
 
-        _velocity += _jumpPower;
+            _velocity += _jumpPower;
+        }
     }
 
     public void Sprint(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if(_enableSprint)
         {
-            _currentMoveSpeed = _sprintSpeed;
+            if (context.started)
+            {
+                _currentMoveSpeed = _sprintSpeed;
+            }
+            else if (context.canceled)
+            {
+                _currentMoveSpeed = _moveSpeed;
+            }
         }
-        else if(context.canceled)
-        {
-            _currentMoveSpeed = _moveSpeed;
-        }
+    }
+
+    private void ApplyMovement()
+    {
+        _characterController.Move(_direction * Time.deltaTime * _currentMoveSpeed);
     }
 
     private void ApplyRotation()
@@ -132,11 +186,6 @@ public class Player : MonoBehaviour
         var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currnetVelocity, 0.05f);
         transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-    }
-
-    private void ApplyMovement()
-    {
-        _characterController.Move(_direction * _currentMoveSpeed * Time.deltaTime);
     }
 
     private void ApplyGravity()
@@ -161,8 +210,7 @@ public class Player : MonoBehaviour
                 //player death
                 _anim.SetBool("isAlive", false);
                 _input.DeactivateInput();
-            }
-            Debug.Log(damage + " Damage Taken!");
+            } 
         }
     }
 }
