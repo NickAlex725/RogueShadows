@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+//using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int _dashDamage;
     [SerializeField] private float _dashDuration = 0.05f;
     [SerializeField] private float _gravityMultiplier = 3.0f;
+    [SerializeField] private bool _enableSprint;
+    [SerializeField] private bool _enableJump;
 
     [Header("References")]
     [SerializeField] private Animator _anim;
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
 
     //player info
     private Health _health;
+    public bool canDash = false;
     private bool _canDoDamage = false;
     private bool _canBeDamaged = true;
 
@@ -47,10 +50,15 @@ public class Player : MonoBehaviour
     {
         if(_canDoDamage)
         {
-            var target = other.GetComponent<MeleeEnemy>();
-            if (target != null)
+            var Mtarget = other.GetComponent<MeleeEnemy>();
+            var Rtarget = other.GetComponent<RangedEnemy>();
+            if (Mtarget != null)
             {
-                target.TakeDamage(_dashDamage);
+                Mtarget.TakeDamage(_dashDamage);
+            }
+            if (Rtarget != null)
+            {
+                Rtarget.TakeDamage(_dashDamage);
             }
         }
     }
@@ -73,14 +81,15 @@ public class Player : MonoBehaviour
         Aim();
     }
 
-    
     public void ShadowDash(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        StartCoroutine(Dash());
+        if(canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
     
-
     private IEnumerator Dash()
     {
         _input.DeactivateInput();
@@ -91,6 +100,7 @@ public class Player : MonoBehaviour
         Instantiate(_dashVFX, _VFXTransform.position, Quaternion.identity);
         for (float i = 0; i < _dashDuration; i++)
         {
+            transform.forward = _mouseDirection;
             _characterController.Move(_mouseDirection.normalized * _dashStrength);
             yield return new WaitForSeconds(0.01f);
         }
@@ -127,7 +137,7 @@ public class Player : MonoBehaviour
             //no janky rotations when hovering over player
             _mouseDirection.y = 0;
 
-            transform.forward = _mouseDirection;
+            //transform.forward = _mouseDirection;
         }
     }
     //end of Raycasting code
@@ -140,31 +150,33 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        /* disabling for now
-        if (!context.started) return;
-        if (!_characterController.isGrounded) return;
+        if(_enableJump)
+        {
+            if (!context.started) return;
+            if (!_characterController.isGrounded) return;
 
-        _velocity += _jumpPower;
-        */
+            _velocity += _jumpPower;
+        }
     }
 
     public void Sprint(InputAction.CallbackContext context)
     {
-        /* disabled for now
-        if (context.started)
+        if(_enableSprint)
         {
-            _currentMoveSpeed = _sprintSpeed;
+            if (context.started)
+            {
+                _currentMoveSpeed = _sprintSpeed;
+            }
+            else if (context.canceled)
+            {
+                _currentMoveSpeed = _moveSpeed;
+            }
         }
-        else if (context.canceled)
-        {
-            _currentMoveSpeed = _moveSpeed;
-        }
-        */
     }
 
     private void ApplyMovement()
     {
-        _characterController.Move(_direction * Time.deltaTime * _moveSpeed);
+        _characterController.Move(_direction * Time.deltaTime * _currentMoveSpeed);
     }
 
     private void ApplyRotation()

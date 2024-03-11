@@ -13,6 +13,8 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] protected ParticleSystem _deathVFX;
 
     [Header("References")]
+    [SerializeField] GameObject _shadowTriggerBox;
+    [SerializeField] Transform _shadowDropPosition;
     protected Player _target;
     protected NavMeshAgent _nav;
     protected Health _health;
@@ -48,8 +50,9 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if (_health.TakeDamage(damage) <= 0)
         {
-            Destroy(gameObject);
             Instantiate(_deathVFX, transform.position, Quaternion.identity);
+            Instantiate(_shadowTriggerBox, _shadowDropPosition.position, Quaternion.identity);
+            Destroy(gameObject);
             //Play death anim
             //Destroy gameobject in a animation event
         }

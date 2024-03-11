@@ -114,17 +114,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5f9095b46c5a44085140d2f3ba71d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
-  _sprintSpeed: 10
-  _jumpPower: 4
-  _dashStrength: 0.4
+  _moveSpeed: 10
+  _sprintSpeed: 20
+  _jumpPower: 3
+  _dashStrength: 0.5
   _dashDamage: 100
-  _dashDuration: 50
+  _dashDuration: 25
   _gravityMultiplier: 1
+  _enableSprint: 0
+  _enableJump: 0
   _anim: {fileID: 1307769987130042898}
   _VFXTransform: {fileID: 5915373182528363227}
   _dashVFX: {fileID: 3559891168393963799, guid: 825dd0760b4d644468f819a2a037b629,
     type: 3}
+  canDash: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!65 &287632158851418976
 BoxCollider:
   m_ObjectHideFlags: 0
