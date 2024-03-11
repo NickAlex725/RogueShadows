@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/StandardAssets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/RougeShadows/Scenes/MainMenu.unity
+    guid: 865b6d8604501bd4fabc39b1cc215ad4
+  - enabled: 1
+    path: Assets/RougeShadows/Scenes/LoadingScene.unity
+    guid: 6f63af61a987cd548bc403b58a339460
+  - enabled: 1
+    path: Assets/RougeShadows/Scenes/Level1.unity
+    guid: 4035ce7f1dc66e244a7f14e1ea4f9bca
   m_configObjects: {}
