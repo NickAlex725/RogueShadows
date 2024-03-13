@@ -9,12 +9,13 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     [Header("Player Stats")]
-    [SerializeField] private float _moveSpeed = 1;
+    [SerializeField] private int _moveSpeed = 3;
     [SerializeField] private float _sprintSpeed;
     [SerializeField] private float _jumpPower;
     [SerializeField] private float _dashStrength = 0.05f;
     [SerializeField] private int _dashDamage;
     [SerializeField] private float _dashDuration = 0.05f;
+    [SerializeField] private float _insideShadowMoveSpeed = 10;
     [SerializeField] private float _gravityMultiplier = 3.0f;
     [SerializeField] private bool _enableSprint;
     [SerializeField] private bool _enableJump;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     //player info
     private Health _health;
     public bool canDash = false;
+    public bool shadowSpeedUp = false;
     private bool _canDoDamage = false;
     private bool _canBeDamaged = true;
 
@@ -158,7 +160,7 @@ public class Player : MonoBehaviour
             _velocity += _jumpPower;
         }
     }
-
+/*
     public void Sprint(InputAction.CallbackContext context)
     {
         if(_enableSprint)
@@ -173,9 +175,17 @@ public class Player : MonoBehaviour
             }
         }
     }
-
+*/
     private void ApplyMovement()
     {
+        if (shadowSpeedUp)
+        {
+            _currentMoveSpeed = _insideShadowMoveSpeed;
+        }
+        else
+        {
+            _currentMoveSpeed = _moveSpeed;
+        }
         _characterController.Move(_direction * Time.deltaTime * _currentMoveSpeed);
     }
 
@@ -213,4 +223,6 @@ public class Player : MonoBehaviour
             } 
         }
     }
+
+
 }

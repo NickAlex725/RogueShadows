@@ -10,6 +10,7 @@ public class ShadowTriggerBox : MonoBehaviour
         if (player != null)
         {
             player.canDash = true;
+            player.shadowSpeedUp = true;
         }
     }
 
@@ -19,6 +20,7 @@ public class ShadowTriggerBox : MonoBehaviour
         if (player != null)
         {
             player.canDash = false;
+            player.shadowSpeedUp = false;
         }
     }
 }
