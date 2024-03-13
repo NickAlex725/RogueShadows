@@ -266,8 +266,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.94
-  m_Radius: 1.06
+  m_Height: 2
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -416,12 +416,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 05e3330e8dada464f95a8e591055bc55,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.074640095
+      value: -0.015
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05e3330e8dada464f95a8e591055bc55,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.57
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05e3330e8dada464f95a8e591055bc55,
         type: 3}
