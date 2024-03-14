@@ -117,7 +117,7 @@ MonoBehaviour:
   _moveSpeed: 10
   _sprintSpeed: 20
   _jumpPower: 3
-  _dashStrength: 0.5
+  _dashStrength: 0.4
   _dashDamage: 100
   _dashDuration: 25
   _gravityMultiplier: 1
