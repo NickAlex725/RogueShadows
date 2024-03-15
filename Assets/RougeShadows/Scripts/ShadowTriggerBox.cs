@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShadowTriggerBox : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Player>();
         if (player != null)
