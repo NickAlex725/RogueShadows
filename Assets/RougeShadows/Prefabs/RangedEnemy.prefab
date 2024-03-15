@@ -163,7 +163,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -375,7 +375,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -489,6 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _attackCD: 0.7
+  _detectionRadius: 3
   _deathVFX: {fileID: 3559891168393963799, guid: f9414a28662b64c488e0e10210f1d290,
     type: 3}
   _shadowTriggerBox: {fileID: 9143944260491305526, guid: 1cd90ec27308eeb4d84dc2edc72a8223,
