@@ -10,6 +10,7 @@ public abstract class BaseEnemy : MonoBehaviour
     [Header("Enmey Stats")]
     [SerializeField] protected int _damage;
     [SerializeField] protected float _attackCD;
+    [SerializeField] protected int _detectionRadius = 3;
     [SerializeField] protected ParticleSystem _deathVFX;
 
     [Header("References")]
@@ -32,16 +33,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public virtual void Update()
     {
-        _nav.SetDestination(_target.transform.position);
-        transform.LookAt(_target.transform);
-        if(!_canAttack)
-        {
-            _currentAttackCD -= Time.deltaTime;
-            if(_currentAttackCD <= 0)
-            {
-                _canAttack = true;
-            }
-        }
+        trackPlayer();
     }
 
     public abstract void Attack(Player target);
@@ -56,5 +48,28 @@ public abstract class BaseEnemy : MonoBehaviour
             //Play death anim
             //Destroy gameobject in a animation event
         }
+    }
+
+    private void trackPlayer()
+    {
+        if (Vector3.Distance(this.gameObject.transform.position, _target.transform.position) <= _detectionRadius)
+        {
+            _nav.isStopped = false;
+            _nav.SetDestination(_target.transform.position);
+            transform.LookAt(_target.transform);
+            if (!_canAttack)
+            {
+                _currentAttackCD -= Time.deltaTime;
+                if (_currentAttackCD <= 0)
+                {
+                    _canAttack = true;
+                }
+            }
+        }
+        else
+        {
+            _nav.isStopped = true;
+        }
+
     }
 }
