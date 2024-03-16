@@ -120,7 +120,8 @@ MonoBehaviour:
   _dashStrength: 0.4
   _dashDamage: 100
   _dashDuration: 25
-  _gravityMultiplier: 1
+  _insideShadowMoveSpeed: 10
+  _gravityMultiplier: 0.25
   _enableSprint: 0
   _enableJump: 0
   _anim: {fileID: 1307769987130042898}
@@ -128,6 +129,7 @@ MonoBehaviour:
   _dashVFX: {fileID: 3559891168393963799, guid: 825dd0760b4d644468f819a2a037b629,
     type: 3}
   canDash: 0
+  shadowSpeedUp: 0
   groundMask:
     serializedVersion: 2
     m_Bits: 64
