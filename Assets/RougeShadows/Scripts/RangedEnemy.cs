@@ -9,6 +9,7 @@ public class RangedEnemy : BaseEnemy
 
     public override void Attack(Player target)
     {
+        _audioSource.PlayOneShot(_attackSFX);
         _currentAttackCD = _attackCD;
         _canAttack = false;
         Instantiate(_gunVFX, _barrel.position, Quaternion.identity);

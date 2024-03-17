@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _dashStrength = 0.05f;
     [SerializeField] private int _dashDamage;
     [SerializeField] private float _dashDuration = 0.05f;
+    [SerializeField] private AudioClip _dashInSFX;
+    [SerializeField] private AudioClip _dashOutSFX;
     [SerializeField] private float _insideShadowMoveSpeed = 10;
     [SerializeField] private float _gravityMultiplier = 3.0f;
     [SerializeField] private bool _enableSprint;
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private Transform _VFXTransform;
     [SerializeField] private ParticleSystem _dashVFX;
+    private AudioSource _audioSource;
     private PlayerInput _input;
     private TrailRenderer _trail;
 
@@ -71,6 +74,7 @@ public class Player : MonoBehaviour
         _input = GetComponent<PlayerInput>();
         _trail = GetComponent<TrailRenderer>();
         _health = GetComponent<Health>();
+        _audioSource = GetComponent<AudioSource>();
         _currentMoveSpeed = _moveSpeed;
         mainCamera = Camera.main;
     }
@@ -94,6 +98,7 @@ public class Player : MonoBehaviour
     
     private IEnumerator Dash()
     {
+        _audioSource.PlayOneShot(_dashInSFX);
         _input.DeactivateInput();
         _canBeDamaged = false;
         _canDoDamage = true;
@@ -106,6 +111,7 @@ public class Player : MonoBehaviour
             _characterController.Move(_mouseDirection.normalized * _dashStrength);
             yield return new WaitForSeconds(0.01f);
         }
+        _audioSource.PlayOneShot(_dashOutSFX);
         _input.ActivateInput();
         _canBeDamaged = true;
         _canDoDamage = false;

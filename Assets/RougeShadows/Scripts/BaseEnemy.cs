@@ -11,11 +11,14 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] protected int _damage;
     [SerializeField] protected float _attackCD;
     [SerializeField] protected int _detectionRadius = 3;
-    [SerializeField] protected ParticleSystem _deathVFX;
 
     [Header("References")]
     [SerializeField] GameObject _shadowTriggerBox;
     [SerializeField] Transform _shadowDropPosition;
+    [SerializeField] protected ParticleSystem _deathVFX;
+    [SerializeField] protected AudioClip _deathSFX;
+    [SerializeField] protected AudioClip _attackSFX;
+    protected AudioSource _audioSource;
     protected Player _target;
     protected NavMeshAgent _nav;
     protected Health _health;
@@ -32,6 +35,7 @@ public abstract class BaseEnemy : MonoBehaviour
         _health = GetComponent<Health>();
         _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _waveSpawner = FindAnyObjectByType<WaveSpawner>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public virtual void Update()
@@ -52,6 +56,7 @@ public abstract class BaseEnemy : MonoBehaviour
             {
                 _waveSpawner.RemoveEnemy();
             }
+            _audioSource.PlayOneShot(_deathSFX);
             //Play death anim
             //Destroy gameobject in a animation event
         }

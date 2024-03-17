@@ -1150,6 +1150,16 @@ PrefabInstance:
       propertyPath: canDash
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
+        type: 3}
+      propertyPath: _dashInSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: bd1402adc473b3440b761090f89a5a2f, type: 3}
+    - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
+        type: 3}
+      propertyPath: _dashOutSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 20ffec2e524fb0749a9eec725812dd63, type: 3}
     - target: {fileID: 8906762502301314171, guid: 0de7c07552e3ce149a13a6e3417bbab7,
         type: 3}
       propertyPath: m_Name
