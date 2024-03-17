@@ -24,7 +24,7 @@ public abstract class BaseEnemy : MonoBehaviour
     protected Health _health;
 
     //enemy info
-    protected bool _canAttack;
+    protected bool _canAttack = false;
     protected float _currentAttackCD;
 
     protected WaveSpawner _waveSpawner;
