@@ -445,7 +445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _attackCD: 0.7
-  _detectionRadius: 3
+  _detectionRadius: 100
   _deathVFX: {fileID: 3559891168393963799, guid: f9414a28662b64c488e0e10210f1d290,
     type: 3}
   _shadowTriggerBox: {fileID: 9143944260491305526, guid: 1cd90ec27308eeb4d84dc2edc72a8223,

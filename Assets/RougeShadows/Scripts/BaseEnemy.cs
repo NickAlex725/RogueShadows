@@ -24,11 +24,14 @@ public abstract class BaseEnemy : MonoBehaviour
     protected bool _canAttack;
     protected float _currentAttackCD;
 
+    protected WaveSpawner _waveSpawner;
+
     private void Awake()
     {
         _nav = GetComponent<NavMeshAgent>();
         _health = GetComponent<Health>();
         _target = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _waveSpawner = FindAnyObjectByType<WaveSpawner>();
     }
 
     public virtual void Update()
@@ -45,6 +48,10 @@ public abstract class BaseEnemy : MonoBehaviour
             Instantiate(_deathVFX, transform.position, Quaternion.identity);
             Instantiate(_shadowTriggerBox, _shadowDropPosition.position, Quaternion.identity);
             Destroy(gameObject);
+            if(_waveSpawner != null)
+            {
+                _waveSpawner.RemoveEnemy();
+            }
             //Play death anim
             //Destroy gameobject in a animation event
         }
