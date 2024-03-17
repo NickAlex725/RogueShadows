@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator _anim;
     [SerializeField] private Transform _VFXTransform;
     [SerializeField] private ParticleSystem _dashVFX;
+    [SerializeField] private GameObject _deathUI;
     private AudioSource _audioSource;
     private PlayerInput _input;
     private TrailRenderer _trail;
@@ -231,6 +232,8 @@ public class Player : MonoBehaviour
                 //player death
                 _anim.SetBool("isAlive", false);
                 _input.DeactivateInput();
+                _deathUI.gameObject.SetActive(true);
+
             }
             _healthBarAmount -= damage;
             _healthBarImage.fillAmount = _healthBarAmount / 100f;
