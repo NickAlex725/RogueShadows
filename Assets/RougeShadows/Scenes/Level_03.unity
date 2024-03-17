@@ -24134,7 +24134,7 @@ PrefabInstance:
     - target: {fileID: 8517833568746243803, guid: e8896550b4a964347a897f6899434006,
         type: 3}
       propertyPath: _enemiesPerWaveAndNumberOfWaves.Array.data[3]
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
