@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8318ddab06ae174c952e91165b18e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 25
+  _damage: 15
   _attackCD: 2
   _detectionRadius: 100
   _shadowTriggerBox: {fileID: 9143944260491305526, guid: 1cd90ec27308eeb4d84dc2edc72a8223,

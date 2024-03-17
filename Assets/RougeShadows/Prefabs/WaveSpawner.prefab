@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyTypes:
   - {fileID: 8176963213535272245, guid: c4123b1fd88703c42aed4e1e941a6bd4, type: 3}
-  - {fileID: 8953098167009989330, guid: 2a5d5344ad6c8e84ab0a22c04bd6291b, type: 3}
+  - {fileID: 8953098167009989330, guid: 3fc9b083524c25f45852b268d560f15e, type: 3}
   _enemiesPerWaveAndNumberOfWaves: 0500000007000000080000000a000000
   _spawnPoints:
   - {fileID: 8746900365245175843}
