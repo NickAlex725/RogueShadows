@@ -3,6 +3,7 @@ using System.Collections.Generic;
 //using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Health))]
@@ -46,6 +47,10 @@ public class Player : MonoBehaviour
     public bool shadowSpeedUp = false;
     private bool _canDoDamage = false;
     private bool _canBeDamaged = true;
+
+    //Player UI
+    public Image _healthBarImage;
+    public float _healthBarAmount = 100f;
 
     //raycast
     [SerializeField] private LayerMask groundMask;
@@ -226,7 +231,9 @@ public class Player : MonoBehaviour
                 //player death
                 _anim.SetBool("isAlive", false);
                 _input.DeactivateInput();
-            } 
+            }
+            _healthBarAmount -= damage;
+            _healthBarImage.fillAmount = _healthBarAmount / 100f;
         }
     }
 
