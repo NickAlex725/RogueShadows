@@ -71,6 +71,7 @@ public abstract class BaseEnemy : MonoBehaviour
             
             if(_animator.GetBool("Unsheathed") == true && _animator.GetBool("isWalking") == true)
             {_nav.isStopped = false;}
+            
             _nav.SetDestination(_target.transform.position);
             transform.LookAt(_target.transform);
             if (!_canAttack)

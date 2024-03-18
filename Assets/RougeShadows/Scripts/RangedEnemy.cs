@@ -23,6 +23,9 @@ public class RangedEnemy : BaseEnemy
         if(_nav.remainingDistance <= _nav.stoppingDistance && _canAttack)
         {
             Attack(_target);
+        }else
+        {
+            _nav.isStopped = false;
         }
     }
 }
