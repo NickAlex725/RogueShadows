@@ -6019,6 +6019,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
         type: 3}
+      propertyPath: _deathUI
+      value: 
+      objectReference: {fileID: 1548720258}
+    - target: {fileID: 6555295403194034912, guid: 0de7c07552e3ce149a13a6e3417bbab7,
+        type: 3}
       propertyPath: _healthBarImage
       value: 
       objectReference: {fileID: 1870653888}
@@ -28323,6 +28328,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathUI
       objectReference: {fileID: 0}
+    - target: {fileID: 9063858166037279245, guid: 31ab7c74741af1740a9f66f873cb9fa3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28331,6 +28341,12 @@ PrefabInstance:
 --- !u!224 &1548720257 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6584041555134009676, guid: 31ab7c74741af1740a9f66f873cb9fa3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1548720256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1548720258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9063858166037279245, guid: 31ab7c74741af1740a9f66f873cb9fa3,
     type: 3}
   m_PrefabInstance: {fileID: 1548720256}
   m_PrefabAsset: {fileID: 0}
