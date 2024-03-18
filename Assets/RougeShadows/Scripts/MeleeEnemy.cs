@@ -6,10 +6,7 @@ public class MeleeEnemy : BaseEnemy
 {
     public override void Attack(Player target)
     {
-        _audioSource.PlayOneShot(_attackSFX);
-        target.TakeDamage(_damage);
-        _currentAttackCD = _attackCD;
-        _canAttack = false;
+        //_animator.SetTrigger("Attack");
     }
 
     public override void Update()
@@ -17,12 +14,26 @@ public class MeleeEnemy : BaseEnemy
         base.Update();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         var player = other.GetComponent<Player>();
         if (player != null && _canAttack)
         {
-            Attack(player);
+            _nav.isStopped = true;
+            _animator.SetBool("isWalking", false);
+            _animator.SetTrigger("Attack"); //damage function is in EnemyAnimationHelper.cs now
+            _currentAttackCD = _attackCD;
+            _canAttack = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var player = other.GetComponent<Player>();
+        if (player != null)
+        {
+            _animator.SetBool("isWalking", true);
+            _nav.isStopped = false;
         }
     }
 }
