@@ -8,7 +8,7 @@ using UnityEngine.AI;
 public abstract class BaseEnemy : MonoBehaviour
 {
     [Header("Enmey Stats")]
-    [SerializeField] protected int _damage;
+    [SerializeField] public int _damage;
     [SerializeField] protected float _attackCD;
     [SerializeField] protected int _detectionRadius = 3;
 
@@ -17,14 +17,15 @@ public abstract class BaseEnemy : MonoBehaviour
     [SerializeField] Transform _shadowDropPosition;
     [SerializeField] protected ParticleSystem _deathVFX;
     [SerializeField] protected AudioClip _deathSFX;
-    [SerializeField] protected AudioClip _attackSFX;
-    protected AudioSource _audioSource;
-    protected Player _target;
-    protected NavMeshAgent _nav;
+    public AudioClip _attackSFX;
+    public Animator _animator;
+    public AudioSource _audioSource;
+    public Player _target;
+    public NavMeshAgent _nav;
     protected Health _health;
 
     //enemy info
-    protected bool _canAttack = false;
+    public bool _canAttack = false;
     protected float _currentAttackCD;
 
     protected WaveSpawner _waveSpawner;
@@ -66,7 +67,10 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if (Vector3.Distance(this.gameObject.transform.position, _target.transform.position) <= _detectionRadius)
         {
-            _nav.isStopped = false;
+            _animator.SetTrigger("Unsheath");
+            
+            if(_animator.GetBool("Unsheathed") == true && _animator.GetBool("isWalking") == true)
+            {_nav.isStopped = false;}
             _nav.SetDestination(_target.transform.position);
             transform.LookAt(_target.transform);
             if (!_canAttack)
@@ -77,9 +81,11 @@ public abstract class BaseEnemy : MonoBehaviour
                     _canAttack = true;
                 }
             }
+            
         }
         else
         {
+            _animator.SetBool("isWalking", false);
             _nav.isStopped = true;
         }
 
