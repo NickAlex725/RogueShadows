@@ -21,6 +21,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public Animator _animator;
     public AudioSource _audioSource;
     public Player _target;
+    public GameObject _enemyModel;
     public NavMeshAgent _nav;
     protected Health _health;
 
@@ -50,9 +51,16 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if (_health.TakeDamage(damage) <= 0)
         {
+             Collider[] colliders = GetComponentsInChildren<Collider>();
+            foreach (Collider collider in colliders)
+            {
+                collider.enabled = false;
+            }
+
             Instantiate(_deathVFX, transform.position, Quaternion.identity);
             Instantiate(_shadowTriggerBox, _shadowDropPosition.position, Quaternion.identity);
-            Destroy(gameObject);
+            StartCoroutine(DeathSequence());
+            //Destroy(gameObject);
             if(_waveSpawner != null)
             {
                 _waveSpawner.RemoveEnemy();
@@ -62,6 +70,26 @@ public abstract class BaseEnemy : MonoBehaviour
             //Destroy gameobject in a animation event
         }
     }
+
+    private IEnumerator DeathSequence()
+    {
+        // Disable the enemy model
+        _enemyModel.SetActive(false);
+
+        // Play the death sound
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        _audioSource.PlayOneShot(_deathSFX);
+
+        // Wait for the sound to finish playing
+        yield return new WaitForSeconds(_deathSFX.length);
+
+        // Delete the entire GameObject
+        Destroy(gameObject);
+    }
+
 
     private void trackPlayer()
     {

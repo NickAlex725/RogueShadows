@@ -202,6 +202,7 @@ MonoBehaviour:
   _animator: {fileID: 2289565235977681537}
   _audioSource: {fileID: 2988584372912585774}
   _target: {fileID: 0}
+  _enemyModel: {fileID: 833443613074404300}
   _nav: {fileID: 0}
   _canAttack: 0
 --- !u!65 &5980343130495572077

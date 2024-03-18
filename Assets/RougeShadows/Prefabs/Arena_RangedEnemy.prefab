@@ -183,6 +183,7 @@ MonoBehaviour:
   _animator: {fileID: 9090739839755705739}
   _audioSource: {fileID: 3263948303210691164}
   _target: {fileID: 0}
+  _enemyModel: {fileID: 805762091884070859}
   _nav: {fileID: 0}
   _canAttack: 0
   _barrel: {fileID: 6856100925087116838}
