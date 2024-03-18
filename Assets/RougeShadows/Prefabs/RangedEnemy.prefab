@@ -178,7 +178,7 @@ MonoBehaviour:
   _shadowDropPosition: {fileID: 4988440110661372345}
   _deathVFX: {fileID: 3559891168393963799, guid: f9414a28662b64c488e0e10210f1d290,
     type: 3}
-  _deathSFX: {fileID: 8300000, guid: d8b78f378327a384eb7e212bc8d9923d, type: 3}
+  _deathSFX: {fileID: 8300000, guid: 9c472114e8b4be04d9c63e51b168ed6a, type: 3}
   _attackSFX: {fileID: 8300000, guid: 75beef6a0dfa80a4f9aa795af6d017bd, type: 3}
   _animator: {fileID: 1169328122410988920}
   _audioSource: {fileID: 3263948303210691164}

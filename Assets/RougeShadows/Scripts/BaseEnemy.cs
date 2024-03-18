@@ -82,6 +82,7 @@ public abstract class BaseEnemy : MonoBehaviour
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
         _audioSource.PlayOneShot(_deathSFX);
+        _canAttack = false;
 
         // Wait for the sound to finish playing
         yield return new WaitForSeconds(_deathSFX.length);
