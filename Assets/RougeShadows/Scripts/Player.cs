@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
 
     //Player UI
     public Image _healthBarImage;
-    public float _healthBarAmount = 100f;
+    public float _healthBarAmount;
+    [SerializeField] private float _healthBarMulti;
 
     //raycast
     [SerializeField] private LayerMask groundMask;
@@ -236,7 +237,7 @@ public class Player : MonoBehaviour
 
             }
             _healthBarAmount -= damage;
-            _healthBarImage.fillAmount = _healthBarAmount / 100f;
+            _healthBarImage.fillAmount = _healthBarAmount / _healthBarMulti;
         }
     }
 
