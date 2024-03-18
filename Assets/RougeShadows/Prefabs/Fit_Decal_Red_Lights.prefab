@@ -61,9 +61,11 @@ PrefabInstance:
     - target: {fileID: 7843977997206141471, guid: 97634b30ac5a67348b09d9a0290610f8,
         type: 3}
       propertyPath: m_Name
-      value: Fit_DecalShadow_TriggerBox
+      value: Fit_Decal_Red_Lights
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -3613295183924973451, guid: 97634b30ac5a67348b09d9a0290610f8, type: 3}
+    - {fileID: 3592609489276138541, guid: 97634b30ac5a67348b09d9a0290610f8, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5346715084169938307, guid: 97634b30ac5a67348b09d9a0290610f8, type: 3}
     m_AddedGameObjects: []
@@ -91,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 0e2d90efcaf2dfc46b64b3ee095cce75, type: 2}
+  m_Material: {fileID: 2100000, guid: 27a61a416c9d9ac46be1fd926bc2c20e, type: 2}
   m_DrawDistance: 1000
   m_FadeScale: 1
   m_StartAngleFade: 180
@@ -102,4 +104,4 @@ MonoBehaviour:
   m_ScaleMode: 1
   m_Offset: {x: 0.05, y: 0, z: 0}
   m_Size: {x: 2.75, y: 1, z: 1}
-  m_FadeFactor: 0.75
+  m_FadeFactor: 0.5
