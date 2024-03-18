@@ -178,7 +178,7 @@ MonoBehaviour:
   _shadowDropPosition: {fileID: 7104190101117083499}
   _deathVFX: {fileID: 3559891168393963799, guid: f9414a28662b64c488e0e10210f1d290,
     type: 3}
-  _deathSFX: {fileID: 0}
+  _deathSFX: {fileID: 8300000, guid: d8b78f378327a384eb7e212bc8d9923d, type: 3}
   _attackSFX: {fileID: 8300000, guid: 75beef6a0dfa80a4f9aa795af6d017bd, type: 3}
   _animator: {fileID: 9090739839755705739}
   _audioSource: {fileID: 3263948303210691164}
@@ -509,6 +509,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be03108713453994d975c00ec23a68b6,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be03108713453994d975c00ec23a68b6,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be03108713453994d975c00ec23a68b6,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be03108713453994d975c00ec23a68b6,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -556,6 +571,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: be03108713453994d975c00ec23a68b6,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8648741920362925993, guid: be03108713453994d975c00ec23a68b6,
         type: 3}
