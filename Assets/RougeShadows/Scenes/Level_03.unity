@@ -24396,8 +24396,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9211108646688206967, guid: 091fb52ecf3a3d540b7ccc85b79be8f3,
         type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211108646688206967, guid: 091fb52ecf3a3d540b7ccc85b79be8f3,
+        type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 123
+      value: 44
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -89109,6 +89114,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DeathUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063858166037279245, guid: 31ab7c74741af1740a9f66f873cb9fa3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

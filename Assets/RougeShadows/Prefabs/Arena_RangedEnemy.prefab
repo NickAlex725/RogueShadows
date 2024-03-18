@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 1
   _attackCD: 0.7
-  _detectionRadius: 50
+  _detectionRadius: 75
   _shadowTriggerBox: {fileID: 9143944260491305526, guid: 1cd90ec27308eeb4d84dc2edc72a8223,
     type: 3}
   _shadowDropPosition: {fileID: 7104190101117083499}

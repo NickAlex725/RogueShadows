@@ -191,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 15
   _attackCD: 2
-  _detectionRadius: 18
+  _detectionRadius: 100
   _shadowTriggerBox: {fileID: 9143944260491305526, guid: 1cd90ec27308eeb4d84dc2edc72a8223,
     type: 3}
   _shadowDropPosition: {fileID: 7494766209400034277}
@@ -251,7 +251,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.08
   m_Pitch: 1
   Loop: 0
   Mute: 0
