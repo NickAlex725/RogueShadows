@@ -131,8 +131,11 @@ MonoBehaviour:
   _VFXTransform: {fileID: 5915373182528363227}
   _dashVFX: {fileID: 3559891168393963799, guid: 825dd0760b4d644468f819a2a037b629,
     type: 3}
+  _deathUI: {fileID: 0}
   canDash: 0
   shadowSpeedUp: 0
+  _healthBarImage: {fileID: 0}
+  _healthBarAmount: 200
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -394,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c6173fe64fec04aa553315d60a8fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 200
 --- !u!82 &3678057150064065868
 AudioSource:
   m_ObjectHideFlags: 0
