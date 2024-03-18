@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/RougeShadows/Scenes/Level_01.unity
     guid: 4035ce7f1dc66e244a7f14e1ea4f9bca
+  - enabled: 1
+    path: Assets/RougeShadows/Scenes/Level_02.unity
+    guid: 19733d7eace3d924484d65f31a46ecbc
+  - enabled: 1
+    path: Assets/RougeShadows/Scenes/Level_03.unity
+    guid: cf4e5d512f89b2f448ec2d14d6e06d50
   m_configObjects: {}

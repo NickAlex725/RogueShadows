@@ -16,6 +16,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentWaveText;
     [SerializeField] private TextMeshProUGUI _enemiesRemainingText;
     [SerializeField] private TextMeshProUGUI _waveCountDownText;
+    [SerializeField] private GameObject _victoryUI;
 
     private GameObject[] _enemiesToSpawn;
     private int _currentTimer;
@@ -102,7 +103,9 @@ public class WaveSpawner : MonoBehaviour
     {
         Debug.Log("Vicotry!");
         _allWavesComplete = true;
-        //What happens after player clears all waves
+        _currentWaveText.gameObject.SetActive(false);
+        _enemiesRemainingText.gameObject.SetActive(false);
+        _victoryUI.gameObject.SetActive(true);
     }
 
     public void RemoveEnemy()
