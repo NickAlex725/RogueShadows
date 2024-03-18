@@ -3,7 +3,17 @@ guid: c47ced6a5afca1946a70c9ce956e366c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_LaserBaton
+    second: {fileID: 2100000, guid: c425106fdf71a0748b309479924064ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 7b2584e63bcf6e54f91cc39c7d15c9a6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
